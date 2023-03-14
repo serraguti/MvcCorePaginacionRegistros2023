@@ -13,6 +13,24 @@ namespace MvcCorePaginacionRegistros2023.Repositories
             this.context = context;
         }
 
+        #region VISTA DEPARTAMENTOS
+
+        public int GetNumeroRegistrosVistaDepartamentos()
+        {
+            return this.context.VistaDepartamentos.Count();
+        }
+
+        public async Task<VistaDepartamento> 
+            GetVistaDepartamentoAsync(int posicion)
+        {
+            VistaDepartamento vista = await
+                this.context.VistaDepartamentos
+                .FirstOrDefaultAsync(x => x.Posicion == posicion);
+            return vista;
+        }
+
+        #endregion
+
         #region DEPARTAMENTOS
 
         public async Task<List<Departamento>> GetDepartamentos()
