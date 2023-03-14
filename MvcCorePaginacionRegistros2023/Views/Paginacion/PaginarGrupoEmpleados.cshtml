@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MvcCorePaginacionRegistros2023.Models.Empleado>
+
+@{
+    int numeroregistros =(int)ViewData["REGISTROS"];
+    int numeropagina = 1;
+}
+
+@{
+    ViewData["Title"] = "PaginarGrupoEmpleados";
+}
+
+<h1>Paginar grupo Empleados</h1>
+
+<ul class="list-group list-group-horizontal">
+    @for (int i = 1; i <= numeroregistros; i += 3)
+    {
+        <li class="list-group-item list-group-item-warning">
+            <a asp-controller="Paginacion"
+                asp-action="PaginarGrupoEmpleados"
+                asp-route-posicion="@i">
+                Página @numeropagina
+            </a>
+        </li>
+        numeropagina += 1;
+    }
+</ul>
+
+<table class="table table-info">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>APELLIDO</th>
+            <th>OFICIO</th>
+            <th>SALARIO</th>
+            <th>IDDEPARTAMENTO</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEmpleado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oficio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDepartamento)
+        </tr>
+}
+    </tbody>
+</table>
