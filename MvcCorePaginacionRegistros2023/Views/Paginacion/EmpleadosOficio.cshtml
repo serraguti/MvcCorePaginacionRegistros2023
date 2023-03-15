@@ -1,0 +1,64 @@
+﻿@model List<Empleado>
+@{
+    int numregistros = 0;
+    string oficio = "";
+    int numeropagina = 1;
+    //VAMOS A RECIBIR SIEMPRE EL NUMERO DE REGISTROS???
+    if (ViewData["REGISTROS"] != null)
+    {
+        numregistros = (int)ViewData["REGISTROS"];
+        oficio = ViewData["OFICIO"].ToString();
+    }
+}
+
+<h1>Empleados Oficio</h1>
+
+<form method="post">
+    <label>Introduzca un oficio</label>
+    <input type="text" name="oficio" class="form-control" required/>
+    <button class="btn btn-info">
+        Buscar empleados
+    </button>
+</form>
+
+@if (Model != null)
+{
+    //DIBUJAMOS LA PAGINACION Y LA TABLA DE EMPLEADOS
+    <ul class="list-group list-group-horizontal">
+        @for (int i = 1; i <= numregistros; i += 3)
+        {
+            <li class="list-group-item list-group-item-success">
+                <a asp-controller="Paginacion"
+                    asp-action="EmpleadosOficio"
+                    asp-route-posicion="@i"
+                    asp-route-oficio="@oficio">
+                    Página @numeropagina
+                </a>
+            </li>
+            numeropagina += 1;
+        }
+    </ul>
+
+    <table class="table table-info">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>APELLIDO</th>
+                <th>OFICIO</th>
+                <th>SALARIO</th>
+                <th>IDDEPARTAMENTO</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>@item.IdEmpleado</td>
+                <td>@item.Apellido</td>
+                <td>@item.Oficio</td>
+                <td>@item.Salario</td>
+                <td>@item.IdDepartamento</td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}

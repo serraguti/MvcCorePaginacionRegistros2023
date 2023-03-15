@@ -11,6 +11,5 @@ namespace MvcCorePaginacionRegistros2023.Data
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<VistaDepartamento> VistaDepartamentos { get; set; }
-
     }
 }

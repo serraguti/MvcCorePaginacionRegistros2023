@@ -18,6 +18,39 @@ namespace MvcCorePaginacionRegistros2023.Controllers
             return View();
         }
 
+        public async Task<IActionResult> 
+            EmpleadosOficio(int? posicion, string oficio)
+        {
+            if (posicion == null)
+            {
+                posicion = 1;
+                return View();
+            }
+            else
+            {
+                ModelPaginarEmpleados model = await
+                    this.repo.GetEmpleadosOficioAsync(posicion.Value, oficio);
+                List<Empleado> empleados = model.Empleados;
+                int numRegistros = model.NumeroRegistros;
+                ViewData["REGISTROS"] = numRegistros;
+                ViewData["OFICIO"] = oficio;
+                return View(empleados);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmpleadosOficio(string oficio)
+        {
+            //CUANDO BUSQUEMOS, DESDE QUE POSICION DEBERIAMOS HACERLO?
+            ModelPaginarEmpleados model =
+                await this.repo.GetEmpleadosOficioAsync(1, oficio);
+            List<Empleado> empleados = model.Empleados;
+            int numRegistros = model.NumeroRegistros;
+            ViewData["REGISTROS"] = numRegistros;
+            ViewData["OFICIO"] = oficio;
+            return View(empleados);
+        }
+
         public async Task<IActionResult>
             PaginarGrupoEmpleados(int? posicion)
         {
